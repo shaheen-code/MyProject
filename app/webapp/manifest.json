@@ -1,0 +1,88 @@
+
+{
+"_version":"1.8.0",
+"sap.app":{
+    "id":"bookshop",
+    "type":"application",
+    "title": "Browse Books",
+    "description": "Sample Application",
+    "i18n": "i18n/i18n.properties",
+    "dataSources": {
+        "CatalogService":{
+            "uri": "/catalog/",
+            "type": "OData",
+            "settings": {
+                "odataVersion": "4.0"
+            }
+        }
+    }
+},
+"sap.ui5":{
+    "dependencies":{
+        "libs":{}
+ 
+    },
+    "models": {
+        "i18n":{
+            "type":"sap.ui.model.resources.ResourceModel",
+            "uri":"i18n/i18n.properties"
+        },
+        "":{
+            "dataSource": "CatalogService",
+            "settings": {
+                "synchronizationMode":"None",
+                "operationMode": "Server",
+                "autoExpandSelect": true,
+                "groupProperties": {
+                    "default": {
+                        "submit":"Auto"
+                    }
+                }
+            }
+        }
+    },
+    "routing": {
+        "routes": [{
+            "pattern": "",
+            "name": "BookList",
+            "target": "BookList"
+        },
+        {
+            "pattern": "Books({key})",
+            "name":"BookDetails",
+            "target":"BookDetails"
+        }
+    ],
+    "targets":{
+        "BookList":{
+            "type": "Component",
+            "id": "BookList",
+            "name": "sap.fe.templates.ListReport",
+            "options":{
+                "settings":{
+                    "entitySet":"Books",
+                    "navigation":{
+                        "Books": {
+                            "detail":{
+                                "route":"Bookdetails"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "BookDetails":{
+            "type":"Component",
+            "id": "BookDetails",
+            "name":"sap.fe.templates.ObjectReport",
+            "options":{
+                "settings":{
+                    "entitySet":"Books"
+                }
+            }
+        }
+ 
+    }
+    }
+}
+}

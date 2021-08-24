@@ -1,0 +1,17 @@
+###
+GET http://localhost:4004/catalog/Authors?$expand=books
+
+###
+GET http://localhost:4004/catalog/Books?$expand=author
+
+###
+POST http://localhost:4004/catalog/Authors
+Content-Type: application/json
+
+{"id":4711, "name":"Max Streifeneder"}
+
+###
+POST http://localhost:4004/catalog/Books
+Content-Type: application/json
+
+{"id":1100, "title":"Java Rocks", "stock":20, "author_id":4711}
