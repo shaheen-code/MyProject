@@ -4,7 +4,7 @@ GET http://localhost:4004/stats/OrderInfo
 POST http://localhost:4004/catalog/Orders
 Content-Type: application/json
 
-{"book_id":201, "quantity":2}
+{"book_id":201, "quantity":4}
 
 ### Add some orders
 POST http://localhost:4004/catalog/Orders

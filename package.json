@@ -7,13 +7,16 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^5",
-    "express": "^4"
+    "express": "^4",
+    "hdb": "^0.18.3"
   },
   "devDependencies": {
+    "@sap/ux-specification": "^1.90.8",
     "sqlite3": "^5.0.2"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "watch-project1": "cds watch --open project1/webapp/index.html#fe-lrop-v4"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -41,14 +44,18 @@
     }
   },
   "cds": {
+    
     "requires": {
       "db": {
         "kind": "sqlite",
         "model": "*",
         "credentials": {
-          "database": "bookshop.db"
+          "database": "mybookshop.db"
         }
       }
     }
-  }
+  },
+  "sapux": [
+    "app/project1"
+  ]
 }

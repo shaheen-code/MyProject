@@ -3,7 +3,7 @@ GET http://localhost:4004/catalog/Books
 POST http://localhost:4004/catalog/Books
 Content-Type: application/json
 
-{"id":10, "title":"this is my new book: Max Streifeneder"}
+{"ID":12, "title":"this is my new 12th book: Max Streifeneder"}
 
 ###
 POST http://localhost:4004/catalog/Orders
