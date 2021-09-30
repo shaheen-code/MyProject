@@ -25,3 +25,4 @@ module.exports = srv =>
      each.level=each.stock>500?3:1
  })
 }
+

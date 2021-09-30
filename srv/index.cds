@@ -6,15 +6,15 @@ annotate CatalogService.Books with @(
     Common.SemanticKey: [title],
 
 UI:{
-    Identification: [{Value: title}],
-    
-     SelectionFields: [title,author.name,author_ID],
+     Identification: [{Value: title}],
+      SelectionFields: [title,AuthorName,author_ID,country_code],
     LineItem:[
         {Value: ID},
         {Value: title},
-        {Value: author.name},
+        {Value: AuthorName},
         {Value: author_ID},
-        {Value: stock, Label: 'Stock Level', Criticality: level}
+        {Value: stock, Label: 'Stock Level', Criticality: level},
+    
 
         //  {$Type: 'UI.DataField',Value: ID, Label: '{i18n>ID}'},
         // {$Type: 'UI.DataField',Value: title, Label: '{i18n>Book Title}'},
@@ -27,7 +27,7 @@ UI:{
         TypeName: '{i18n>Book}',
         TypeNamePlural: '{i18n>BookList}',
       //  Title: {Value: title},
-        Description: {Value:author.name},
+        Description: {Value:AuthorName},
         Title:{Value: ID, Label:'Book ID'}
         
         
@@ -36,13 +36,19 @@ UI:{
 
          Facets: [
             {$Type: 'UI.ReferenceFacet', Label: '{i18n>Book Info}', Target: '@UI.FieldGroup#General'},
+            {$Type: 'UI.ReferenceFacet', Label: '{i18n>Book Info}', Target: '@UI.FieldGroup#General'},
+            { $Type:'UI.ReferenceFacet', Label:'{i18n>Books of Author}', Target : 'author/books/@UI.LineItem'}
         ],
         FieldGroup#General: {
             Data: [
                 //{Value: ID, Label:'{i18n>Book ID}'},
                 {Value: title},
                 {Value: author_ID,Label:'{i18n>Author ID}'},
-             {Value: stock,Label:'{i18n>Stock}'}
+             {Value: stock,Label:'{i18n>Stock}'},
+             //{Value: bookStatus, Label:'{i18n>Book Status}'}
+                    
+
+
             ]
         },
         
@@ -51,11 +57,46 @@ UI:{
 },    
 
 );
-// {
-// 	author @ValueList.entity:'Authors';
+annotate CatalogService.Books.image with 
+{
+    @UI.IsImageUrl: true
+    @common.Text :'{i18n> Image}'
+    image
+
+}
+
+
+
+// annotate CatalogService.Books with {
+//         bookStatus @(Common : {
+//                 ValueListWithFixedValues: true,
+                
+//                 ValueList : {
+//                     SearchSupported : true,
+//                     CollectionPath  : 'Books',
+//                     Parameters      : [{
+//                         $Type             : 'Common.ValueListParameterInOut',
+//                         LocalDataProperty : bookStatus,
+//                         ValueListProperty : 'bookStatus'
+//                     },
+//                     {
+//                     $Type             : 'Common.ValueListParameterDisplayOnly',
+//                     ValueListProperty : 'bookStatus'
+//                 },   
+//                     ]
+//                 },
+//                // Text            : <NavigationProperty>.<TextProperty>,
+//                // TextArrangement : #TextOnly 
+//             });
 // };
 
-annotate CatalogService.Books with {
+
+
+//  {
+// 	author @ValueList.entity:'Authors';
+//  };
+
+    annotate CatalogService.Books with {
     author @(Common : {
         FieldControl : #Mandatory,
         ValueList    : {
@@ -76,16 +117,9 @@ annotate CatalogService.Books with {
         }
     });
 }
-    
 
 
-   
-annotate CatalogService.Books with {
-    ID @title:'{i18n>ID}' @Core.Computed;
-    title @title:'{i18n>Title}';
-    author @title:'{i18n>AuthorID}';
-    stock @title:'{i18n>Stock}';
-}
+
 
 annotate CatalogService.Authors with {
     ID @title:'{i18n>ID}' @UI.HiddenFilter @Core.Computed;
@@ -93,12 +127,11 @@ annotate CatalogService.Authors with {
 }
 annotate CatalogService.Authors with @( 
 UI:{
-    //Identification: [{Value: title}],
      SelectionFields: [name, ID],
     LineItem:[
         {Value: ID},
         {Value: name},
-       // {Value: books.title},
+       
         
     ],
     HeaderInfo:{
